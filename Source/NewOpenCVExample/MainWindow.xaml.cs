@@ -46,10 +46,32 @@ namespace NewOpenCVExample
             }
         }
 
+        private void FileSave(ref string fileName)
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+
+            dlg.DefaultExt = ".jpg";
+            dlg.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|All Files (*.*)|*.*";
+
+            bool? result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                fileName = dlg.FileName;
+            }
+            else
+            {
+                fileName = "";
+            }
+        }
+
         private void LoadImageBtn_Click(object sender, RoutedEventArgs e)
         {
             string fileName = string.Empty;
             FileOpen(ref fileName);
+
+            if (fileName == string.Empty)
+                return;
 
             Mat image;
             image = Cv2.ImRead(fileName, ImreadModes.Color);
@@ -59,9 +81,31 @@ namespace NewOpenCVExample
                 return;
             }
 
+            DisplayImage(image);
+        }
+
+        private void SaveImage(Mat image)
+        {
+            string fileName = string.Empty;
+            FileSave(ref fileName);
+            if (fileName == string.Empty)
+                return;
+
+            Cv2.ImWrite(fileName, image);
+        }
+
+        private void DisplayImage(Mat image)
+        {
             WriteableBitmap wb = new WriteableBitmap(image.Width, image.Height, 96, 96, PixelFormats.Bgr24, null);
             WriteableBitmapConverter.ToWriteableBitmap(image, wb);
             ShowImage.Source = wb;
+        }
+
+        private void SaveImageBtn_Click(object sender, RoutedEventArgs e)
+        {
+            WriteableBitmap wb = ShowImage.Source as WriteableBitmap;
+            Mat image = wb.ToMat();
+            SaveImage(image);
         }
     }
 }
