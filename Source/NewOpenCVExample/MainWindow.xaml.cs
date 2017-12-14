@@ -107,5 +107,44 @@ namespace NewOpenCVExample
             Mat image = wb.ToMat();
             SaveImage(image);
         }
+
+        private void GaussianBlur()
+        {
+            WriteableBitmap wb = ShowImage.Source as WriteableBitmap;
+            Mat image = wb.ToMat();
+            
+            for (int i = 1; i < 31; i = i + 2)
+            {
+                OpenCvSharp.Size size = new OpenCvSharp.Size(i, i);
+                Cv2.GaussianBlur(image, image, size, 0, 0);
+            }
+            DisplayImage(image);
+        }
+
+        private void Sharpen(Mat image)
+        {
+            int channels = image.Channels();
+            Mat sharpImage = new Mat();
+            sharpImage.Create(image.Size(), image.Channels());
+
+            for (int i = 1; i < image.Rows - 1; ++i)
+            {
+                IntPtr previous = image.Ptr(i - 1);
+                IntPtr current = image.Ptr(i);
+                IntPtr next = image.Ptr(i + 1);
+
+                IntPtr output = sharpImage.Ptr(i);
+
+                for (int j = channels; i < channels * (image.Cols - 1); i++)
+                {
+                    
+                }
+            }
+        }
+
+        private void GaussianBlurBtn_Click(object sender, RoutedEventArgs e)
+        {
+            GaussianBlur();
+        }
     }
 }
