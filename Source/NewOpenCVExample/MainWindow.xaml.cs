@@ -105,14 +105,20 @@ namespace NewOpenCVExample
         {
             WriteableBitmap wb = ShowImage.Source as WriteableBitmap;
             Mat image = wb.ToMat();
-            SaveImage(image);
+            if(image != null)
+                SaveImage(image);
         }
 
         private void GaussianBlur()
         {
             WriteableBitmap wb = ShowImage.Source as WriteableBitmap;
             Mat image = wb.ToMat();
-            
+
+            if (image == null)
+            {
+                return;
+            }
+
             for (int i = 1; i < 31; i = i + 2)
             {
                 OpenCvSharp.Size size = new OpenCvSharp.Size(i, i);
@@ -145,6 +151,45 @@ namespace NewOpenCVExample
         private void GaussianBlurBtn_Click(object sender, RoutedEventArgs e)
         {
             GaussianBlur();
+        }
+
+        private void Logo()
+        {
+            WriteableBitmap wb = ShowImage.Source as WriteableBitmap;
+            Mat image = wb.ToMat();
+
+            string strFile = string.Empty;
+
+            FileOpen(ref strFile);
+
+            if (strFile == string.Empty)
+            {
+                return;
+            }
+
+            if (image == null)
+            {
+                return;
+            }
+
+            Mat logo = new Mat(strFile, ImreadModes.Color);
+
+            Mat imageLogo = new Mat(image, new OpenCvSharp.Rect(0, 0, logo.Cols, logo.Rows));
+            Cv2.AddWeighted(imageLogo, 1.0, logo, 0.3, 0.1, imageLogo);
+            //logo.CopyTo(imageLogo);
+            using (OpenCvSharp.Window test = new OpenCvSharp.Window("str"))
+            {
+                Cv2.ImShow("str", imageLogo);
+                Cv2.WaitKey(0);
+            }
+            //Cv2.AddWeighted(image, 1.0, imageLogo, 0.3, 0.1, image);
+
+            DisplayImage(image);
+        }
+
+        private void LogoBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Logo();
         }
     }
 }
