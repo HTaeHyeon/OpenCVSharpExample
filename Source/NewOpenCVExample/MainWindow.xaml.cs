@@ -177,12 +177,27 @@ namespace NewOpenCVExample
             Mat imageLogo = new Mat(image, new OpenCvSharp.Rect(0, 0, logo.Cols, logo.Rows));
             Cv2.AddWeighted(imageLogo, 1.0, logo, 0.3, 0.1, imageLogo);
             //logo.CopyTo(imageLogo);
-            using (OpenCvSharp.Window test = new OpenCvSharp.Window("str"))
-            {
-                Cv2.ImShow("str", imageLogo);
-                Cv2.WaitKey(0);
-            }
+            //using (OpenCvSharp.Window test = new OpenCvSharp.Window("str"))
+            //{
+            //    Cv2.ImShow("str", imageLogo);
+            //    Cv2.WaitKey(0);
+            //}
             //Cv2.AddWeighted(image, 1.0, imageLogo, 0.3, 0.1, image);
+            
+            DisplayImage(image);
+        }
+
+        private void BilateralFilter()
+        {
+            WriteableBitmap wb = ShowImage.Source as WriteableBitmap;
+            Mat image = wb.ToMat();
+
+            if (image == null)
+            {
+                return;
+            }
+
+            Cv2.BilateralFilter(image, image, -1, 15, 15);
 
             DisplayImage(image);
         }
@@ -190,6 +205,11 @@ namespace NewOpenCVExample
         private void LogoBtn_Click(object sender, RoutedEventArgs e)
         {
             Logo();
+        }
+
+        private void BilateralFilterBtn_Click(object sender, RoutedEventArgs e)
+        {
+            BilateralFilter();
         }
     }
 }

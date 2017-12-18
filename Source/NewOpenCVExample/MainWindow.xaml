@@ -11,7 +11,8 @@
         <Button x:Name="LoadImageBtn" Content="LoadImage" Margin="10,455,678,0" VerticalAlignment="Top" Click="LoadImageBtn_Click"/>
         <Button x:Name="SaveImageBtn" Content="SaveImage" HorizontalAlignment="Left" Margin="90,455,0,0" VerticalAlignment="Top" Width="75" Click="SaveImageBtn_Click"/>
         <Button x:Name="GaussianBlurBtn" Content="Gausiian" HorizontalAlignment="Left" Margin="170,455,0,0" VerticalAlignment="Top" Width="75" Click="GaussianBlurBtn_Click"/>
-        <Button x:Name="LogoBtn" Content="Logo" HorizontalAlignment="Left" Margin="250,455,0,0" VerticalAlignment="Top" Width="75" Click="LogoBtn_Click"/>
+        <Button x:Name="LogoBtn" Content="Logo" HorizontalAlignment="Left" Margin="678,455,0,0" VerticalAlignment="Top" Width="75" Click="LogoBtn_Click"/>
+        <Button x:Name="BilateralFilterBtn" Content="Bilateral" HorizontalAlignment="Left" Margin="250,455,0,0" VerticalAlignment="Top" Width="75" Click="BilateralFilterBtn_Click"/>
 
     </Grid>
 </Window>
